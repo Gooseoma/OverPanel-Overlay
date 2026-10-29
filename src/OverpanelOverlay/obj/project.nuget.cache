@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "RX1gumAwbJE=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Gooseoma\\Documents\\GitHub\\OverPanel-Overlay\\src\\OverpanelOverlay\\OverpanelOverlay.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Gooseoma\\.nuget\\packages\\microsoft.web.webview2\\1.0.3537.50\\microsoft.web.webview2.1.0.3537.50.nupkg.sha512",
+    "C:\\Users\\Gooseoma\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.28\\microsoft.netcore.app.ref.8.0.28.nupkg.sha512",
+    "C:\\Users\\Gooseoma\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.28\\microsoft.windowsdesktop.app.ref.8.0.28.nupkg.sha512",
+    "C:\\Users\\Gooseoma\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.28\\microsoft.aspnetcore.app.ref.8.0.28.nupkg.sha512",
+    "C:\\Users\\Gooseoma\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.28\\microsoft.netcore.app.host.win-x64.8.0.28.nupkg.sha512"
+  ],
+  "logs": []
+}

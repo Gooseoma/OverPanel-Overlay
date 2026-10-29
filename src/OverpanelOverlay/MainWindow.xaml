@@ -1,0 +1,194 @@
+<Window x:Class="Overpanel.Overlay.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        Title="OverPanel Overlay"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        WindowStartupLocation="Manual"
+        Background="{StaticResource BgBrush}"
+        MinWidth="360"
+        MinHeight="320"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Display"
+        FontFamily="Segoe UI">
+
+    <Border BorderBrush="{StaticResource LineBrush}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок: тянем за него окно -->
+            <Border Grid.Row="0"
+                    Background="{StaticResource PanelBrush}"
+                    BorderBrush="{StaticResource LineBrush}"
+                    BorderThickness="0,0,0,1"
+                    MouseLeftButtonDown="Header_MouseLeftButtonDown">
+                <Grid Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Ellipse x:Name="StatusDot"
+                             Grid.Column="0"
+                             Width="7"
+                             Height="7"
+                             Margin="10,0,7,0"
+                             VerticalAlignment="Center"
+                             Fill="{StaticResource MutedBrush}" />
+
+                    <TextBlock x:Name="TitleText"
+                               Grid.Column="1"
+                               VerticalAlignment="Center"
+                               FontSize="11"
+                               Foreground="{StaticResource MutedBrush}"
+                               TextTrimming="CharacterEllipsis"
+                               Text="OverPanel · Overlay" />
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="0,0,4,0">
+                        <Button x:Name="ReloadButton" Style="{StaticResource IconButton}" Content="&#xE72C;" ToolTip="Обновить (F5)" Click="Reload_Click" />
+                        <Button x:Name="PinButton" Style="{StaticResource IconButton}" Content="&#xE840;" ToolTip="Поверх всех окон" Click="Pin_Click" />
+                        <Button x:Name="BrowserButton" Style="{StaticResource IconButton}" Content="&#xE774;" ToolTip="Открыть панель в браузере" Click="OpenInBrowser_Click" />
+                        <Button x:Name="MenuButton" Style="{StaticResource IconButton}" Content="&#xE712;" ToolTip="Ещё" Click="Menu_Click">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Выйти из аккаунта" Click="SignOut_Click" />
+                                    <MenuItem Header="Скопировать HWID" Click="CopyHwid_Click" />
+                                    <MenuItem Header="Открыть папку профиля" Click="OpenProfileFolder_Click" />
+                                    <MenuItem Header="Открыть лог" Click="OpenLog_Click" />
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Style="{StaticResource IconButton}" Content="&#xE921;" ToolTip="Свернуть" Click="Minimize_Click" />
+                        <Button x:Name="CloseButton" Style="{StaticResource IconButton}" Content="&#xE8BB;" ToolTip="Закрыть" Click="Close_Click" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Контент -->
+            <Grid Grid.Row="1" Background="{StaticResource BgBrush}">
+                <wv2:WebView2 x:Name="Browser" />
+
+                <Border x:Name="LoginPanel" Background="{StaticResource BgBrush}" Visibility="Collapsed">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="26,24" VerticalAlignment="Center">
+                            <TextBlock Text="OverPanel"
+                                       FontSize="26"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource TextBrush}" />
+                            <TextBlock Text="Оверлей панели администрации"
+                                       FontSize="12"
+                                       Foreground="{StaticResource MutedBrush}"
+                                       Margin="0,4,0,20" />
+
+                            <TextBlock TextWrapping="Wrap"
+                                       FontSize="12"
+                                       LineHeight="18"
+                                       Foreground="{StaticResource MutedBrush}"
+                                       Text="Войдите в аккаунт панели. Устройство привяжется по HWID — чтобы перенести доступ на другой компьютер, текущее устройство нужно сначала отвязать." />
+
+                            <Border Background="{StaticResource SurfaceBrush}"
+                                    BorderBrush="{StaticResource LineBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="6"
+                                    Padding="10,8"
+                                    Margin="0,16,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="HWID ЭТОГО УСТРОЙСТВА"
+                                               FontSize="9.5"
+                                               Foreground="{StaticResource MutedBrush}" />
+                                    <TextBlock x:Name="HwidText"
+                                               FontFamily="Consolas"
+                                               FontSize="11"
+                                               Margin="0,3,0,0"
+                                               Foreground="{StaticResource TextBrush}"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+
+                            <Button x:Name="SignInButton"
+                                    Style="{StaticResource PrimaryButton}"
+                                    Content="Войти через OverPanel"
+                                    Margin="0,18,0,0"
+                                    Click="SignIn_Click" />
+
+                            <Button x:Name="SkipButton"
+                                    Style="{StaticResource LinkButton}"
+                                    Content="Открыть панель без входа"
+                                    HorizontalAlignment="Left"
+                                    Margin="0,12,0,0"
+                                    Click="SkipSignIn_Click" />
+
+                            <ProgressBar x:Name="BusyBar"
+                                         IsIndeterminate="True"
+                                         Height="3"
+                                         Margin="0,18,0,0"
+                                         Visibility="Collapsed"
+                                         Background="Transparent"
+                                         Foreground="{StaticResource AccentBrush}"
+                                         BorderThickness="0" />
+
+                            <TextBlock x:Name="LoginHint"
+                                       FontSize="11"
+                                       TextWrapping="Wrap"
+                                       Foreground="{StaticResource MutedBrush}"
+                                       Margin="0,10,0,0" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+
+            <!-- Ошибка загрузки / нет WebView2 Runtime -->
+            <Border x:Name="ErrorPanel"
+                    Grid.Row="1"
+                    Background="{StaticResource BgBrush}"
+                    Visibility="Collapsed">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="24" VerticalAlignment="Center">
+                        <TextBlock Text="Не удалось открыть панель"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}" />
+                        <TextBlock x:Name="ErrorText"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   LineHeight="18"
+                                   Foreground="{StaticResource MutedBrush}"
+                                   Margin="0,8,0,0" />
+                        <Button Content="Повторить"
+                                Style="{StaticResource PrimaryButton}"
+                                HorizontalAlignment="Left"
+                                Margin="0,16,0,0"
+                                Click="Retry_Click" />
+                        <Button x:Name="InstallRuntimeButton"
+                                Style="{StaticResource LinkButton}"
+                                Content="Скачать WebView2 Runtime"
+                                HorizontalAlignment="Left"
+                                Margin="0,12,0,0"
+                                Visibility="Collapsed"
+                                Click="InstallRuntime_Click" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- Статус -->
+            <Border Grid.Row="2"
+                    Background="{StaticResource PanelBrush}"
+                    BorderBrush="{StaticResource LineBrush}"
+                    BorderThickness="0,1,0,0"
+                    Padding="10,4">
+                <TextBlock x:Name="FooterText"
+                           FontSize="10.5"
+                           Foreground="{StaticResource MutedBrush}"
+                           TextTrimming="CharacterEllipsis"
+                           Text="Запуск…" />
+            </Border>
+        </Grid>
+    </Border>
+</Window>

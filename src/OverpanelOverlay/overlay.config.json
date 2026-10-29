@@ -1,0 +1,108 @@
+{
+  "window": {
+    "width": 460,
+    "height": 740,
+    "minWidth": 360,
+    "minHeight": 320,
+    "topmost": true,
+    "rememberPosition": true
+  },
+
+  "hotkeys": {
+    "enabled": true,
+    "toggle": "Ctrl+Shift+O"
+  },
+
+  "auth": {
+    "enabled": false,
+    "requireSignIn": false,
+    "panelUrl": "https://app.overpanel.ru",
+    "signInUrl": "https://api.overpanel.ru/overlay/sign-in",
+    "callbackScheme": "overpanel-overlay",
+    "sendHwid": true,
+    "hwidParam": "hwid",
+    "extraParams": {
+      "app": "overlay"
+    },
+    "tokenParamNames": ["token", "access_token", "code"],
+    "successUrlPrefixes": [],
+    "storageInjections": []
+  },
+
+  "panel": {
+    "defaultDetails": "На главной странице",
+    "routes": [
+      { "match": "/players", "details": "Просматривает вкладку «Игроки»" },
+      { "match": "/punishments", "details": "Просматривает вкладку «Наказания»" },
+      { "match": "/anticheat", "details": "Просматривает вкладку «Античит»" },
+      { "match": "/ac", "details": "Просматривает вкладку «Античит»" },
+      { "match": "/reports", "details": "Просматривает вкладку «Репорты»" },
+      { "match": "/admins", "details": "Просматривает вкладку «Администраторы»" },
+      { "match": "/administrators", "details": "Просматривает вкладку «Администраторы»" },
+      { "match": "/chat", "details": "Просматривает вкладку «Чат»" },
+      { "match": "/support", "details": "Связь с оператором" },
+      { "match": "/settings", "details": "Настраивает панель" }
+    ],
+    "actions": {
+      "punish": "Выдает наказания",
+      "ban": "Выдает блокировку",
+      "warn": "Выдает предупреждение",
+      "mute": "Выдает мут",
+      "report": "Разбирает репорт",
+      "chat": "Общается в чате панели",
+      "support": "Общается с оператором"
+    },
+    "actionTtlSeconds": 150,
+    "injected": {
+      "enabled": false,
+      "detectActionAttributes": true,
+      "attributeName": "data-overlay-action",
+      "scanIntervalMs": 1000,
+      "selectors": {
+        "project": "[data-overlay-project]",
+        "roleLabel": "[data-overlay-role-label]",
+        "roleTag": "[data-overlay-role-tag]",
+        "displayName": "[data-overlay-user]",
+        "rank": "[data-overlay-rank]"
+      }
+    },
+    "userAgentSuffix": "OverpanelOverlay/1.0"
+  },
+
+  "identity": {
+    "project": "",
+    "displayName": "",
+    "roleLabel": "Оператор панели",
+    "roleTag": "Оператор",
+    "ownerLabel": "Владелец проекта",
+    "maxRank": 0,
+    "ownerRankBonus": 1
+  },
+
+  "presence": {
+    "enabled": true,
+    "activityType": 3,
+    "detailsTemplate": "{action}",
+    "stateTemplate": "{roleLabel} [{roleTag}]",
+    "largeImageKey": "",
+    "largeTextTemplate": "OverPanel | {project}",
+    "smallImageKey": "",
+    "smallTextTemplate": "",
+    "buttons": [
+      { "label": "OverPanel", "url": "https://overpanel.ru" }
+    ],
+    "showElapsedTime": true,
+    "minUpdateIntervalSeconds": 15,
+    "clearOnExit": true
+  },
+
+  "discord": {
+    "clientId": "1563661908928630786",
+    "reconnectSeconds": 15
+  },
+
+  "logging": {
+    "enabled": true,
+    "level": "debug"
+  }
+}
